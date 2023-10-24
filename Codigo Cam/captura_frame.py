@@ -54,6 +54,16 @@ def show_frame(frame_data: bytes):
 
     rgb = np.frombuffer(frame_bytes[3], 'uint8').reshape(
         (480, 640, 3) if config[6] == 1 else (600, 800, 3)) if frame_bytes[3] else None
+    
+    
+    #Medir distancia al centro de la imagen
+    center_dist = depth[240//2, 320//2]
+    if 0 == config[1]:
+       #print("%f mm" % (center_dist/4))
+       center_dist = center_dist/4
+    else:
+       #print("%f mm" % ((center_dist/5.1) ** 2))
+       center_dist = (center_dist/5.1) ** 2
 
     figsize = (12, 12)
     fig = plt.figure(figsize=figsize)
@@ -61,7 +71,7 @@ def show_frame(frame_data: bytes):
     ax1 = fig.add_subplot(221)
     if not depth is None:
         ax1.imshow(depth)
-        np.save("depth_prueba.npy", depth)
+        #np.save("depth_me.npy", depth)
         # np.savetxt("depth.csv", (depth/4).astype('uint16'), delimiter="," )
     ax2 = fig.add_subplot(222)
     if not ir is None:
@@ -78,5 +88,5 @@ def show_frame(frame_data: bytes):
         img = Image.fromarray(rgb)
 
         # Save the image to a file
-        img.save("prueba_rgb.jpg")
-    return depth, ir, status, rgb
+        #img.save("prueba_me.jpg")
+    return depth, rgb, center_dist

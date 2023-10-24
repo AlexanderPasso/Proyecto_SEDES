@@ -15,10 +15,10 @@ import captura_frame as frame       #importo el archivo de capture_frame para ac
 
 if frame.post_encode_config(conf.frame_config_encode(1,1,255,1,2,7,1,0,0)):
     p = frame.get_frame_from_http()
-    profundidad, ir, status, rgb = frame.show_frame(p)
+    profundidad, rgb, center_dist = frame.show_frame(p)
     # with open("rgbd.raw", 'wb') as f:
     #     f.write(p)
     #     f.flush()
 
-
+#print("Distancia en mm : {}".format(center_dist))
 
